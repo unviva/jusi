@@ -52,7 +52,7 @@ jusi.components.modal = (slots = {}) => {
 }
 ```
 
-😘
+
 --
 roadmap: 
 
