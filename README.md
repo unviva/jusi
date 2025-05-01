@@ -4,6 +4,8 @@ JS only, app development framework
 
 no HTML, no CSS. all handled by jusi!
 
+Follows a syntax similar to vNodes of Vue, but entirely in VanillaJS.
+
 ### Layouts
 ```
 jusi.layouts.login = (fields) => {
@@ -55,6 +57,7 @@ jusi.components.modal = (slots = {}) => {
 
 --
 roadmap: 
+building styles/css by JS
 
 reactivity implementation
 
