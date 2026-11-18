@@ -1,4 +1,7 @@
-const createElement = (tag, props = {}) => {
+import { addUnit } from './utils.js'
+import { jusi } from './jusi.js'
+
+export const createElement = (tag, props = {}) => {
   const el = document.createElement(tag);
   // console.log(el, props.attrs)
 
@@ -98,54 +101,54 @@ const createElement = (tag, props = {}) => {
 
 
 /* elements */
-const header = (props) => createElement('header', props)
-const main = (props) => createElement('main', props)
-const footer = (props) => createElement('footer', props)
+export const header = (props) => createElement('header', props)
+export const main = (props) => createElement('main', props)
+export const footer = (props) => createElement('footer', props)
 
-const form = (props) => createElement('form', props)
-const option = (props) => createElement('option', props)
-const optgroup = (props) => createElement('optgroup', props)
-const label = (props) => createElement('label', props)
-const legend = (props) => createElement('legend', props)
+export const form = (props) => createElement('form', props)
+export const option = (props) => createElement('option', props)
+export const optgroup = (props) => createElement('optgroup', props)
+export const label = (props) => createElement('label', props)
+export const legend = (props) => createElement('legend', props)
 
-const table = (props) => createElement('table', props)
-const thead = (props) => createElement('thead', props)
-const tbody = (props) => createElement('tbody', props)
-const tfoot = (props) => createElement('tfoot', props)
-const tr = (props) => createElement('tr', props)
-const th = (props) => createElement('th', props)
-const td = (props) => createElement('td', props)
+export const table = (props) => createElement('table', props)
+export const thead = (props) => createElement('thead', props)
+export const tbody = (props) => createElement('tbody', props)
+export const tfoot = (props) => createElement('tfoot', props)
+export const tr = (props) => createElement('tr', props)
+export const th = (props) => createElement('th', props)
+export const td = (props) => createElement('td', props)
 
 
-const ol = (props) => createElement('ol', props)
-const ul = (props) => createElement('ul', props)
-const li = (props) => createElement('li', props)
-const embed = (props) => createElement('embed', props)
-const iframe = (props) => createElement('iframe', props)
-const article = (props) => createElement('article', props)
-const img = (props) => createElement('img', props)
-const span = (props) => createElement('span', props)
-const div = (props) => createElement('div', props)
-const button = (props) => createElement('button', props)
-const h1 = (props) => createElement('h1', props)
-const h2 = (props) => createElement('h2', props)
-const h3 = (props) => createElement('h3', props)
-const h4 = (props) => createElement('h4', props)
-const h5 = (props) => createElement('h5', props)
-const h6 = (props) => createElement('h6', props)
-const hr = (props = {}) => createElement('hr', props)
-const blockquote = (props) => createElement('blockquote', props)
-const canvas = (props) => createElement('canvas', props)
-const caption = (props) => createElement('caption', props)
-const code = (props) => createElement('code', props)
-const b = (props) => createElement('b', props)
-const p = (props) => createElement('p', props)
-const pre = (props) => createElement('pre', props)
-const section = (props) => createElement('section', props)
-const strong = (props) => createElement('strong', props)
+export const ol = (props) => createElement('ol', props)
+export const ul = (props) => createElement('ul', props)
+export const li = (props) => createElement('li', props)
+export const embed = (props) => createElement('embed', props)
+export const iframe = (props) => createElement('iframe', props)
+export const article = (props) => createElement('article', props)
+export const img = (props) => createElement('img', props)
+export const span = (props) => createElement('span', props)
+export const div = (props) => createElement('div', props)
+export const button = (props) => createElement('button', props)
+export const h1 = (props) => createElement('h1', props)
+export const h2 = (props) => createElement('h2', props)
+export const h3 = (props) => createElement('h3', props)
+export const h4 = (props) => createElement('h4', props)
+export const h5 = (props) => createElement('h5', props)
+export const h6 = (props) => createElement('h6', props)
+export const hr = (props = {}) => createElement('hr', props)
+export const blockquote = (props) => createElement('blockquote', props)
+export const canvas = (props) => createElement('canvas', props)
+export const caption = (props) => createElement('caption', props)
+export const code = (props) => createElement('code', props)
+export const b = (props) => createElement('b', props)
+export const p = (props) => createElement('p', props)
+export const pre = (props) => createElement('pre', props)
+export const section = (props) => createElement('section', props)
+export const strong = (props) => createElement('strong', props)
 
 /* components */
-const a = (props) => {
+export const a = (props) => {
   if (props.href) {
     if (!props.attrs) { props.attrs = {} }
     props.attrs.href = props.href
@@ -153,52 +156,51 @@ const a = (props) => {
   return createElement('a', props)
 }
 
-const pagination = (props) => {
+export const pagination = (props) => {
   const { page, perPage, total } = props
-  if(!page || !perPage || !total) {
+  if (!page || !perPage || !total) {
     console.error('jusi: page, perPage and total is required')
     return false
   }
-  const numPages = Math.ceil((total/perPage))
+  const numPages = Math.ceil((total / perPage))
   const pages = []
   console.log(numPages, page, perPage, total)
-  /* for (i = 1; i = numPages; i++) {
+  /* for (let i = 1; i <= numPages; i++) {
     const o = option({ text: i, value: i })
     if (i == page) { o.selected = true }
     pages.push(o)
   }  */
- const sel = select({ name: 'postpager', options: pages, events: {change: props.change}})
+  const sel = select({ name: 'postpager', options: pages, events: { change: props.change } })
   return sel
 }
 
-const paginationLinks = (props) => {
+export const paginationLinks = (props) => {
   const { page, perPage, total, events } = props,
     numpages = Math.floor(perPage / total),
     buttons = []
-  if(page>1) {
-    buttons.push(a({ text: '<<', class: 'pagination-first', attrs: {'data-page': 1}, events: { click: events.first } }))
-    buttons.push(a({ text: '<', class: 'pagination-previous', attrs: {'data-page': page-1}, events: { click: events.prev } }))
+  if (page > 1) {
+    buttons.push(a({ text: '<<', class: 'pagination-first', attrs: { 'data-page': 1 }, events: { click: events.first } }))
+    buttons.push(a({ text: '<', class: 'pagination-previous', attrs: { 'data-page': page - 1 }, events: { click: events.prev } }))
   }
-  for (i = 1; i = 10; i++) {
-    const bNum = page>4?(page-4+i):i,
-    lo = { text: bNum, class: 'pagination-page', attrs: {'data-page': bNum} }
-    if(page !== i) { lo.events = { click: events.page } }
+  for (let i = 1; i <= 10; i++) {
+    const bNum = page > 4 ? (page - 4 + i) : i,
+      lo = { text: bNum, class: 'pagination-page', attrs: { 'data-page': bNum } }
+    if (page !== i) { lo.events = { click: events.page } }
     buttons.push(a(lo))
   }
-  buttons.push(a({ text: '>', class: 'pagination-next', attrs: {'data-page': page+1}, events: { click: events.next } }))
-  buttons.push(a({ text: '>>', class: 'pagination-last', attrs: {'data-page': numpages}, events: { click: events.last } }))
-  return div({class: 'pagination'})
+  buttons.push(a({ text: '>', class: 'pagination-next', attrs: { 'data-page': page + 1 }, events: { click: events.next } }))
+  buttons.push(a({ text: '>>', class: 'pagination-last', attrs: { 'data-page': numpages }, events: { click: events.last } }))
+  return div({ class: 'pagination' })
 }
 
-const fieldset = (props) => {
+export const fieldset = (props) => {
   if (!props.contains) { props.contains = [] }
   if (props.title) { props.contains.push(legend({ text: props.title })) }
   return createElement('fieldset', props)
 }
 
 
-
-const radio = (props) => {
+export const radio = (props) => {
   props.type = 'radio'
   return div({
     classList: ['form-field', 'form-radio'],
@@ -212,7 +214,7 @@ const radio = (props) => {
   })
 }
 
-const radios = (props) => {
+export const radios = (props) => {
   const rs = []
   Object.keys(props.options).map(optionKey => {
     rs.push(radio({ label: props.options[optionKey], name: props.name, value: optionKey }))
@@ -223,7 +225,7 @@ const radios = (props) => {
   })
 }
 
-const checkbox = (props) => {
+export const checkbox = (props) => {
   props.type = 'checkbox'
   return div({
     classList: ['form-field', 'form-checkbox'],
@@ -237,7 +239,7 @@ const checkbox = (props) => {
   })
 }
 
-const checkboxes = (props) => {
+export const checkboxes = (props) => {
   const rs = []
   Object.keys(props.options).map(optionKey => {
     rs.push(checkbox({ label: props.options[optionKey], name: props.name, value: optionKey }))
@@ -265,8 +267,8 @@ const createFormElement = (tag, props) => {
 }
 
 
-const input = (props) => createFormElement('input', props)
-const select = (props) => {
+export const input = (props) => createFormElement('input', props)
+export const select = (props) => {
   let opts = []
   if (props.options) {
     opts = jusi.el.replicateSelectOptions(props.options)
@@ -278,23 +280,23 @@ const select = (props) => {
   }
   return createFormElement('select', { ...props, ...{ contains: opts } })
 }
-const textarea = (props) => createFormElement('textarea', props)
+export const textarea = (props) => createFormElement('textarea', props)
 
-const icon = (props) => {
+export const icon = (props) => {
   const fill = props.attrs?.fill || 'black'
   const name = props.name || 'android',
     i = createElement('i', { classList: [`bi-${name}`, 'icon'] })
   return i
 }
 
-const card = (slots) => {
+export const card = (slots) => {
   const cardHeader = div({ classList: ['card-header'], contains: slots.header })
   const cardBody = div({ classList: ['card-body'], contains: slots.body })
   const cardFooter = div({ classList: ['card-footer'], contains: slots.footer })
   return div({ classList: ['card'], contains: [cardHeader, cardBody, cardFooter] })
 }
 
-const grid = (props) => {
+export const grid = (props) => {
   return div({
     classList: ['grid'],
     contains: props.contains,
@@ -302,21 +304,21 @@ const grid = (props) => {
   })
 }
 
-const row = (props) => {
+export const row = (props) => {
   return div({
     ...{ classList: ['row'] },
     ...props
   })
 }
 
-const col = (props) => {
+export const col = (props) => {
   return div({
     ...{ classList: ['col'] },
     ...props
   })
 }
 
-const container = (props) => {
+export const container = (props) => {
   const cls = props.classList || []
   props.classList = [...cls, ...['container']]
   const el = div(props)

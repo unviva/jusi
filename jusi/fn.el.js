@@ -1,29 +1,32 @@
+import { jusi } from './jusi.js'
+import { option, th, tr, td } from './elements.js'
+
 /* ELEMENTS */
-jusi.el = {}
-jusi.el.addTo = (target, item) => target.append(item)
-jusi.el.addFirst = (target, item) => target.prepend(item)
-jusi.el.addLast = (target, item) => target.append(item)
-jusi.el.addBefore = (target, item) => target.before(item)
-jusi.el.addAfter = (target, item) => target.after(item)
-jusi.el.render = (renderOptions) => {
+export const el = {}
+el.addTo = (target, item) => target.append(item)
+el.addFirst = (target, item) => target.prepend(item)
+el.addLast = (target, item) => target.append(item)
+el.addBefore = (target, item) => target.before(item)
+el.addAfter = (target, item) => target.after(item)
+el.render = (renderOptions) => {
   renderOptions.target.innerHTML = ""
   renderOptions.data.map(item => {
-    const el = renderOptions.render(item)
-    renderOptions.target.appendChild(el)
+    const renderedEl = renderOptions.render(item)
+    renderOptions.target.appendChild(renderedEl)
   })
   return renderOptions.target
 }
 
-jusi.el.replicate = (renderOptions) => {
+el.replicate = (renderOptions) => {
   const items = []
   renderOptions.data.map(item => {
-    const el = renderOptions.render(item)
-    items.push(el)
+    const replicatedEl = renderOptions.render(item)
+    items.push(replicatedEl)
   })
   return items
 }
 
-jusi.el.replicateSelectOptions = (data) => {
+el.replicateSelectOptions = (data) => {
   const items = []
   Object.keys(data).map(key => {
     const item = option({ value: key, text: data[key] })
@@ -32,23 +35,21 @@ jusi.el.replicateSelectOptions = (data) => {
   return items
 }
 
-jusi.el.renderTable = (renderOptions) => {
+el.renderTable = (renderOptions) => {
   const { target, data, columns } = renderOptions,
     thead = target.getElementsByTagName("thead")[0],
     theadTR = thead.getElementsByTagName("tr")[0],
     tbody = target.getElementsByTagName("tbody")[0]
 
   tbody.innerHTML = ""
-  colKeys = Object.keys(columns),
-    numCols = colKeys.length,
-    numRows = data.length
+  const colKeys = Object.keys(columns)
 
-  colKeys.map((ck, c) => {
+  colKeys.map((ck) => {
     theadTR.append(th({ text: columns[ck] }))
   })
 
   let rowTemplate = tr({})
-  data.map((set, i) => {
+  data.map((set) => {
     let row = rowTemplate.cloneNode(true)
     colKeys.map((cck, ci) => {
       row.append(td({ text: set[colKeys[ci]] }))
@@ -57,26 +58,22 @@ jusi.el.renderTable = (renderOptions) => {
   })
 }
 
-jusi.el.renderForm = (renderOptions) => {
+el.renderForm = (renderOptions) => {
   const { target, data } = renderOptions,
-    form = new FormData(target),
     inputs = target.getElementsByTagName('input'),
     selects = target.getElementsByTagName('select'),
     textareas = target.getElementsByTagName('textarea'),
     fields = [...inputs, ...selects, ...textareas]
 
-    // reset form before setting values
-    target.reset()
-  // console.log(data)
-  // console.log(fields)
+  // reset form before setting values
+  target.reset()
+
   fields.map(field => {
     const name = field.getAttribute('name'),
       type = field.getAttribute('type'),
       value = field.getAttribute('value'),
       fname = name.replace('[', '').replace(']', '')
-      if (data[fname]) {
-      // console.log(fname, data[fname])  
-
+    if (data[fname]) {
       switch (type) {
         case 'radio':
           if (value == data[fname]) {
@@ -88,36 +85,40 @@ jusi.el.renderForm = (renderOptions) => {
             field.setAttribute('checked', true)
           }
           break;
-          default:
-          // console.log(value, data[fname])
-          if(typeof(data[fname]) === 'object') {
-            // console.log(type, name , value, data[name])
+        default:
+          if (typeof (data[fname]) === 'object') {
             data[fname].map(val => {
               const o = field.querySelector(`option[value=${val}]`)
-              o.selected = true
+              if (o) o.selected = true
             })
           } else {
             field.value = data[fname]
-            // field.setAttribute('value', data[fname])
           }
       }
     }
   })
-
 }
 
-jusi.el.parent = (item, selector) => item.closest(selector)
-jusi.el.children = (item) => item.children
-jusi.el.hide = (item) => item.style.display = 'none'
-jusi.el.show = (item) => item.style.display = 'block'
-jusi.el.invisible = (item) => item.style.visibility = 'hidden'
-jusi.el.visible = (item) => item.style.visibility = 'visible'
-jusi.el.close = (item) => item.remove()
-jusi.el.open = (item) => document.body.appendChild(item)
-jusi.el.clone = (item) => item.cloneNode(true)
+el.parent = (item, selector) => item.closest(selector)
+el.children = (item) => item.children
+el.hide = (item) => item.style.display = 'none'
+el.show = (item) => item.style.display = 'block'
+el.invisible = (item) => item.style.visibility = 'hidden'
+el.visible = (item) => item.style.visibility = 'visible'
+el.close = (item) => item.remove()
+el.open = (item) => document.body.appendChild(item)
+el.clone = (item) => item.cloneNode(true)
 
+jusi.el = el
 
+export const els = {
+  body: document.body,
+  app: document.getElementById('app')
+}
 
-jusi.els = {}
-jusi.els.body = document.body
-jusi.els.app = document.getElementById('app')
+jusi.els = els
+
+export default {
+  el,
+  els
+}

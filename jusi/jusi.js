@@ -1,3 +1,8 @@
+import { cssUtils } from './css.js'
+import { createStyles, setDeviceType } from './utils.js'
+
+export const jusi = {}
+
 /* OPTIONS */
 jusi.options = {}
 
@@ -63,10 +68,6 @@ jusi.page = {
 }
 
 
-
-
-
-
 /* VALIDATE */
 jusi.validate = {
   isvalidUsername(str) {
@@ -108,8 +109,6 @@ jusi.validate = {
 }
 
 
-
-
 /* REQUEST - FETCH */
 jusi.fetch = async (url, reqOptions = {}, renderOptions = {}) => {
   jusi.el.open(jusi.components.loadingOverlay)
@@ -134,7 +133,6 @@ jusi.fetch = async (url, reqOptions = {}, renderOptions = {}) => {
 }
 
 /* ROUTER */
-
 let resolveRoute = (evt) => {
   const url = window.location.hash.slice(1) || "index";
   jusi.page.push(url)
@@ -145,9 +143,10 @@ jusi.init = () => {
   jusi.theme.load()
 }
 
-
 window.addEventListener('load', () => {
   resolveRoute()
 });
 window.addEventListener('hashchange', resolveRoute);
 window.addEventListener("resize", setDeviceType);
+
+export default jusi

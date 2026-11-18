@@ -1,6 +1,8 @@
-const kebabize = (str) => str.replace(/[A-Z]+(?![a-z])|[A-Z]/g, ($, ofs) => (ofs ? "-" : "") + $.toLowerCase())
+import { device, rems, pixies } from './css.js'
 
-const setDeviceType = () => {
+export const kebabize = (str) => str.replace(/[A-Z]+(?![a-z])|[A-Z]/g, ($, ofs) => (ofs ? "-" : "") + $.toLowerCase())
+
+export const setDeviceType = () => {
   const w = window.innerWidth
   device.type = (w < 540) ? 'mobile' : (w < 1024) ? 'tablet' : 'desktop'
   document.body.classList.remove('desktop')
@@ -10,17 +12,17 @@ const setDeviceType = () => {
   // console.log(device.type)
 }
 
-const addUnit = (key, val) => {
+export const addUnit = (key, val) => {
   // console.log(key, val)
   if (rems.includes(key) && (typeof (val) === 'number')) { val += 'rem' }
   if (pixies.includes(key) && (typeof (val) === 'number')) { val += 'px' }
   return val
 }
 
-const addPadding = (padding) => {
+export const addPadding = (padding) => {
   let val = '',
     type = typeof (padding),
-    pt = pr = pb = pl = 0
+    pt = 0, pr = 0, pb = 0, pl = 0
   if (type === 'object') {
     if (padding.y) { pt = pb = padding.y }
     if (padding.top) { pt = padding.top }
@@ -37,7 +39,7 @@ const addPadding = (padding) => {
   return val
 }
 
-const makeCSSText = (styles) => {
+export const makeCSSText = (styles) => {
   const stylesArr = []
   const anims = ['to']
   Object.keys(styles).map(sk => {
@@ -57,7 +59,7 @@ const makeCSSText = (styles) => {
       }
     }
     val = addUnit(sk, val)
-    if(assign) {
+    if (assign) {
       val = [kebabize(sk), val].join(': ')
     }
     stylesArr.push(val)
@@ -66,12 +68,12 @@ const makeCSSText = (styles) => {
   return stylesText
 }
 
-const makeCSSLine = (tag, styles) => {
+export const makeCSSLine = (tag, styles) => {
   const stylesText = makeCSSText(styles)
   return [tag, stylesText].join(' ')
 }
 
-const createStyles = (elementCSS) => {
+export const createStyles = (elementCSS) => {
   let file = ''
   Object.keys(elementCSS).map(tag => {
     file += makeCSSLine(tag, elementCSS[tag])
@@ -83,9 +85,3 @@ const createStyles = (elementCSS) => {
   document.getElementsByTagName('head')[0].appendChild(style);
   return style
 }
-
-
-
-
-
-

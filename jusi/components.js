@@ -1,21 +1,26 @@
+import { jusi } from './jusi.js'
+import { div, span, h5, button, table, thead, tbody, tr } from './elements.js'
+
 jusi.components = {}
 
 /* Loading Overlay */
-jusi.components.loadingOverlay = div({
+export const loadingOverlay = div({
   classList: ['loading-overlay'],
   contains: [div({
     classList: ['loading']
   })]
 })
+jusi.components.loadingOverlay = loadingOverlay
 //jusi.el.addTo(jusi.els.body, jusi.components.loadingOverlay) // add to body for fullscreen overlay
 
 /* Close button */
-jusi.components.closeButton = (clickFn) => {
+export const closeButton = (clickFn) => {
   return span({ text: 'X', classList: ['close-btn'], events: { click: clickFn } })
 }
+jusi.components.closeButton = closeButton
 
 /* Modal */
-jusi.components.modal = (slots = {}) => {
+export const modal = (slots = {}) => {
   const modal = div({ classList: ['modal-overlay'] })
   slots.header.push(jusi.components.closeButton(() => {
     modal.remove()
@@ -31,37 +36,40 @@ jusi.components.modal = (slots = {}) => {
   }))
   return modal
 }
+jusi.components.modal = modal
 
 
 /* Dropdown */
-jusi.components.dropdown = (props) => {
-  const btnO = {class: 'dropbtn'}
+export const dropdown = (props) => {
+  const btnO = { class: 'dropbtn' }
   let items = []
 
-  if(props.icon) { btnO.icon = props.icon }
-  if(props.text) { btnO.text = props.text }
-  if(props.title) { items.push(h5({text: props.title }))}
+  if (props.icon) { btnO.icon = props.icon }
+  if (props.text) { btnO.text = props.text }
+  if (props.title) { items.push(h5({ text: props.title })) }
   const ddItems = [...items, ...props.items]
   // console.log(props.items, ddItems) 
-  return div({ 
+  return div({
     classList: ['dropdown'],
     contains: [
       button(btnO),
-      div({class: 'dropdown-content', contains: ddItems})
+      div({ class: 'dropdown-content', contains: ddItems })
     ]
   })
 }
+jusi.components.dropdown = dropdown
 
 /* Table */
-jusi.components.table = (props) => {
+export const tableComponent = (props) => {
   return table({
     ...props,
     contains: [
-      thead({ contains: [tr({})]}),
-      tbody({ contains: [tr({})]})
+      thead({ contains: [tr({})] }),
+      tbody({ contains: [tr({})] })
     ]
   })
 }
+jusi.components.table = tableComponent
 
 /* Pagination */
 

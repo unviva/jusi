@@ -1,14 +1,12 @@
-const jusi = {}
-
-const scales = { 768: 2, 1024: 3, 1200: 4 }
-const device = {
+export const scales = { 768: 2, 1024: 3, 1200: 4 }
+export const device = {
   type: 'desktop',
   width: window.innerWidth,
   height: window.innerHeight,
   scale: 1
 }
 
-const styleMap = {
+export const styleMap = {
   textColor: 'color',
   fontSize: 'font-size',
   backgroundColor: 'background-color',
@@ -16,11 +14,11 @@ const styleMap = {
   borderWidth: 'border-width'
 }
 
-const rems = ['padding', 'fontSize', 'gap']
-const pixies = ['width', 'height', 'borderWidth', 'borderTopWidth', 'borderRightWidth', 'borderBottomWidth', 'borderLeftWidth', 'borderRadius', 'borderTopRightRadius', 'borderTopLeftRadius', 'borderBottomRightRadius', 'borderBottomLeftRadius', 'maxWidth', 'top', 'right', 'bottom', 'left']
+export const rems = ['padding', 'fontSize', 'gap']
+export const pixies = ['width', 'height', 'borderWidth', 'borderTopWidth', 'borderRightWidth', 'borderBottomWidth', 'borderLeftWidth', 'borderRadius', 'borderTopRightRadius', 'borderTopLeftRadius', 'borderBottomRightRadius', 'borderBottomLeftRadius', 'maxWidth', 'top', 'right', 'bottom', 'left']
 
 
-const css = {}
+export const css = {}
 css.flex = {
   display: 'flex',
   flexDirection: 'row',
@@ -33,7 +31,7 @@ css.hstack = { ...css.row, alignItems: 'center', alignSelf: 'stretch' }
 css.vstack = { ...css.col, alignItems: 'center', alignSelf: 'stretch' }
 
 
-const cssUtils = (styles) => {
+export const cssUtils = (styles) => {
   const utils = {
     '.cols-2': { gridTemplateColumns: 'repeat(2, 1fr)' },
     '.cols-3': { gridTemplateColumns: 'repeat(3, 1fr)' },
@@ -223,4 +221,3 @@ const cssUtils = (styles) => {
 
   return { ...utils, ...jss }
 }
-
